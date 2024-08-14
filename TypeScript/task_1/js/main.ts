@@ -14,6 +14,10 @@ interface Teacher {
   [key: string]: any;
 }
 
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
+
 let student1: Student;
 let student2: Student;
 let studentsList: Student[] = [student1, student2];
