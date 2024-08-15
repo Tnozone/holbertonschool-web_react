@@ -18,6 +18,15 @@ interface Directors extends Teacher {
   numberOfReports: number;
 }
 
+function printTeacher(teacher: Teacher): void {
+  const initial = teacher.firstName.charAt(0);
+  console.log(`${initial}. ${teacher.lastName}`);
+}
+
+interface printTeacherFunction {
+  (teacher: Teacher): void;
+}
+
 let student1: Student;
 let student2: Student;
 let studentsList: Student[] = [student1, student2];
