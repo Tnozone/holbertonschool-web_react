@@ -22,6 +22,8 @@ const listNotifications = [
   { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
 ];
 
+document.body.style.margin = 0;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,29 +58,49 @@ class App extends Component {
 
   render() {
     const { isLoggedIn, logOut } = this.props;
+    const { displayDrawer } = this.state;
+
     return (
       <>
-        <Notifications listNotifications={listNotifications} />
-        <div className={css(styles.app)}>
-          <Header />
-        </div>
-        <div className="App-body">
-          {!isLoggedIn ? (
-            <BodySectionWithMarginBottom title="Log in to continue">
-              <Login />
-            </BodySectionWithMarginBottom>
-          ) : (
-            <BodySectionWithMarginBottom title="Course list">
-              <CourseList listCourses={listCourses} />
-            </BodySectionWithMarginBottom>
-          )}
-        </div>
-        <BodySection title="News from the School">
-          <p>Some Random Text</p>
-        </BodySection>
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={displayDrawer}
+          handleDisplayDrawer={this.handleDisplayDrawer}
+          handleHideDrawer={this.handleHideDrawer}
+        />
+        <div className={css(styles.container)}>
+          <div className={css(styles.app)}>
+            <Header />
+          </div>
+          <div className={css(styles.appBody)}>
+            {!isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
+            ) : (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+            )}
+          </div>
+          <BodySection title="News from the School">
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </p>
+          </BodySection>
 
-        <div className="App-footer">
-          <Footer />
+          <div className={css(styles.footer)}>
+            <Footer />
+          </div>
         </div>
       </>
     );
@@ -99,12 +121,22 @@ const cssVars = {
   mainColor: "#e01d3f",
 };
 
+const screenSize = {
+  small: "@media screen and (max-width: 900px)",
+};
+
 const styles = StyleSheet.create({
+  container: {
+    width: "calc(100% - 16px)",
+    marginLeft: "8px",
+    marginRight: "8px",
+  },
+
   app: {
     borderBottom: `3px solid ${cssVars.mainColor}`,
   },
 
-  body: {
+  appBody: {
     display: "flex",
     justifyContent: "center",
   },
@@ -117,6 +149,9 @@ const styles = StyleSheet.create({
     position: "fixed",
     bottom: 0,
     fontStyle: "italic",
+    [screenSize.small]: {
+      position: "static",
+    },
   },
 });
 
